@@ -1,35 +1,29 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import PublicBoard from "./pages/PublicBoard";
+import AdminFlights from "./pages/AdminFlights";
+import { API_BASE } from "./lib/config";
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const [page, setPage] = useState("public");
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div style={{ fontFamily: "system-ui, Arial", padding: 24, maxWidth: 1100, margin: "0 auto" }}>
+      <h1>Aviation Frontend</h1>
 
-export default App
+      <p>
+        <b>API:</b> {API_BASE}
+      </p>
+
+      <div style={{ display: "flex", gap: 8, marginBottom: 16 }}>
+        <button onClick={() => setPage("public")} disabled={page === "public"}>
+          Public
+        </button>
+        <button onClick={() => setPage("admin")} disabled={page === "admin"}>
+          Admin
+        </button>
+      </div>
+
+      {page === "public" ? <PublicBoard /> : <AdminFlights />}
+    </div>
+  );
+}
